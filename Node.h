@@ -10,6 +10,8 @@ template<typename T>
 class Node {
 public:
 
+    Node();
+
     Node(T t, Node<T> *parent);
     ~Node();
 
@@ -19,6 +21,9 @@ public:
     Node<T>* right = nullptr;
 
     void draw();
+
+
+    void drawLine(std::string line);
 };
 
 

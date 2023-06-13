@@ -18,7 +18,7 @@ Node<T> *Tree<T>::search(T t) {
 
 template<typename T>
 void Tree<T>::insertNode(T t) {
-    insertHere(t, root, nullptr);
+    insertHere(t, root, anchor);
 }
 
 template<typename T>
@@ -37,12 +37,61 @@ void Tree<T>::insertHere(T t, Node<T> *&node, Node<T> *parent) {
 
 template<typename T>
 void Tree<T>::deleteNode(T t) {
+    Node<T> *node = search(t);
+//    Node<T> **nodePointer = inParent(node);
 
+    if (node->left == nullptr && node->right == nullptr) {
+        *inParent(node) = nullptr;
+    } else {
+        Node<T> *replacement;
+        if (node->left == nullptr || node->right == nullptr) {
+            replacement = (node->left != nullptr) ? node->left : node->right;
+        } else {
+            replacement = node->right;
+            while (replacement->left != nullptr){
+                replacement = replacement->left;
+            }
+        }
+
+        *inParent(replacement) = replacement->right;
+        if (replacement->right != nullptr){
+            replacement->right->parent = replacement->parent;
+        }
+        *inParent(node) = replacement;
+        if (node == root){
+            root = replacement;
+        }
+
+        replacement->parent = node->parent;
+        replacement->right = (replacement != node->right) ? node->right : replacement->right;
+        replacement->left = node->left;
+
+        if (replacement->left != nullptr){
+            replacement->left->parent = replacement;
+        }
+        if(replacement->right != nullptr){
+            replacement->right->parent = replacement;
+        }
+    }
+    node->left = nullptr;
+    node->right = nullptr;
+    delete node;
+}
+
+template<typename T>
+Node<T>** Tree<T>::inParent(Node<T>* node){
+    return (node == node->parent->left) ? &node->parent->left : &node->parent->right;
 }
 
 template<typename T>
 void Tree<T>::draw() {
     root->draw();
+    std::cout << std::endl;
+}
+
+template<typename T>
+void Tree<T>::drawLeaf() {
+    root->drawLine("");
     std::cout << std::endl;
 }
 

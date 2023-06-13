@@ -12,11 +12,13 @@ template<typename T>
 class Tree {
 public:
     Tree() = default;
+
     ~Tree();
 
-    Node<T>* root;
+    Node<T> *root;
+    Node<T> *anchor = new Node<T>();
 
-    Node<T>* search(T t);
+    Node<T> *search(T t);
 
     void insertNode(T t);
 
@@ -24,8 +26,14 @@ public:
 
     void draw();
 
+    void drawLeaf();
+
 private:
     void insertHere(T t, Node<T> *&node, Node<T> *parent);
+
+    Node<T> **inParent(Node<T> *node);
+
+
 };
 
 
