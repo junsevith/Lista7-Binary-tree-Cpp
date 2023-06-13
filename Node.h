@@ -23,7 +23,7 @@ public:
     void draw();
 
 
-    void drawLine(std::string line);
+    void drawLine(const std::string& line);
 };
 
 

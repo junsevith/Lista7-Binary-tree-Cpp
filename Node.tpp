@@ -31,7 +31,7 @@ void Node<T>::draw() {
 }
 
 template<typename T>
-void Node<T>::drawLine(std::string line) {
+void Node<T>::drawLine(const std::string& line) {
     std::string message = line + key + " ";
     if (left == nullptr && right == nullptr){
         std::cout << message << std::endl;
@@ -40,7 +40,7 @@ void Node<T>::drawLine(std::string line) {
             right->drawLine(message + "⭧ ");
         }
         if (left != nullptr) {
-            left->drawLine(message + "⭨ ");;
+            left->drawLine(message + "⭨ ");
         }
     }
 

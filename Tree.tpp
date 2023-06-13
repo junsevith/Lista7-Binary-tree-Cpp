@@ -57,6 +57,7 @@ void Tree<T>::deleteNode(T t) {
         if (replacement->right != nullptr){
             replacement->right->parent = replacement->parent;
         }
+
         *inParent(node) = replacement;
         if (node == root){
             root = replacement;
