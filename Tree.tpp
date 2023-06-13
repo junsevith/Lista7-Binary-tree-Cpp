@@ -99,5 +99,4 @@ template<typename T>
 Tree<T>::~Tree() {
 //    std::cout << "dog";
     delete root;
-
-};
+}
