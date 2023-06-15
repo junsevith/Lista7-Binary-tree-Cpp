@@ -2,6 +2,8 @@
 // Created by pawel on 08.06.2023.
 //
 
+#include <sstream>
+
 template<typename T>
 Node<T>::Node(T t, Node<T> *parent) {
     this->key = t;
@@ -32,15 +34,17 @@ void Node<T>::draw() {
 
 template<typename T>
 void Node<T>::drawLine(const std::string& line) {
-    std::string message = line + key + " ";
+    std::stringstream stringstream;
+    stringstream << line << key << " ";
+
     if (left == nullptr && right == nullptr){
-        std::cout << message << std::endl;
+        std::cout << stringstream.str() << std::endl;
     } else{
         if (right != nullptr) {
-            right->drawLine(message + "⭧ ");
+            right->drawLine(stringstream.str() + "⭧ ");
         }
         if (left != nullptr) {
-            left->drawLine(message + "⭨ ");
+            left->drawLine(stringstream.str() + "⭨ ");
         }
     }
 

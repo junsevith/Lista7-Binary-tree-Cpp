@@ -12,33 +12,42 @@ Node<T> *Tree<T>::search(T t) {
         } else if (t > node->key) {
             node = node->right;
         }
+
+        if (node == nullptr) {
+            return nullptr;
+        }
     }
     return node;
 }
 
 template<typename T>
-void Tree<T>::insertNode(T t) {
-    insertHere(t, root, anchor);
+std::string Tree<T>::insertNode(T t) {
+    return insertHere(t, root, anchor);
 }
 
 template<typename T>
-void Tree<T>::insertHere(T t, Node<T> *&node, Node<T> *parent) {
+std::string Tree<T>::insertHere(T t, Node<T> *&node, Node<T> *parent) {
     if (node == nullptr) {
         node = new Node<T>(t, parent);
+        return "Dodano element";
     } else {
         if (t < node->key) {
-            insertHere(t, node->left, node);
+            return insertHere(t, node->left, node);
         } else if (t > node->key) {
-            insertHere(t, node->right, node);
+            return insertHere(t, node->right, node);
+        } else {
+            return "Podany element znajduje się już w drzewie";
         }
     }
 
 }
 
 template<typename T>
-void Tree<T>::deleteNode(T t) {
+std::string Tree<T>::deleteNode(T t) {
     Node<T> *node = search(t);
-//    Node<T> **nodePointer = inParent(node);
+    if (node == nullptr) {
+        return "Nie znaleziono elementu do usunięcia";
+    }
 
     if (node->left == nullptr && node->right == nullptr) {
         *inParent(node) = nullptr;
@@ -48,18 +57,18 @@ void Tree<T>::deleteNode(T t) {
             replacement = (node->left != nullptr) ? node->left : node->right;
         } else {
             replacement = node->right;
-            while (replacement->left != nullptr){
+            while (replacement->left != nullptr) {
                 replacement = replacement->left;
             }
         }
 
         *inParent(replacement) = replacement->right;
-        if (replacement->right != nullptr){
+        if (replacement->right != nullptr) {
             replacement->right->parent = replacement->parent;
         }
 
         *inParent(node) = replacement;
-        if (node == root){
+        if (node == root) {
             root = replacement;
         }
 
@@ -67,27 +76,28 @@ void Tree<T>::deleteNode(T t) {
         replacement->right = (replacement != node->right) ? node->right : replacement->right;
         replacement->left = node->left;
 
-        if (replacement->left != nullptr){
+        if (replacement->left != nullptr) {
             replacement->left->parent = replacement;
         }
-        if(replacement->right != nullptr){
+        if (replacement->right != nullptr) {
             replacement->right->parent = replacement;
         }
     }
     node->left = nullptr;
     node->right = nullptr;
     delete node;
+    return "Usunięto element";
 }
 
 template<typename T>
-Node<T>** Tree<T>::inParent(Node<T>* node){
+Node<T> **Tree<T>::inParent(Node<T> *node) {
     return (node == node->parent->left) ? &node->parent->left : &node->parent->right;
 }
 
 template<typename T>
 void Tree<T>::draw() {
     root->draw();
-    std::cout << std::endl;
+//    std::cout << std::endl;
 }
 
 template<typename T>

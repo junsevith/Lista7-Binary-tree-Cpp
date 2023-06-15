@@ -20,23 +20,23 @@ public:
 
     Node<T> *search(T t);
 
-    void insertNode(T t);
+    std::string insertNode(T t);
 
-    void deleteNode(T t);
+    std::string deleteNode(T t);
 
     void draw();
 
     void drawLeaf();
 
 private:
-    void insertHere(T t, Node<T> *&node, Node<T> *parent);
+    std::string insertHere(T t, Node<T> *&node, Node<T> *parent);
 
     Node<T> **inParent(Node<T> *node);
 
 
 };
 
+#include "Tree.tpp"
 
 #endif //LISTA7C_TREE_H
 
-#include "Tree.tpp"
